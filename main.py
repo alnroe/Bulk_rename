@@ -11,14 +11,15 @@ def rename_files(surname_l: List):
     os.chdir(os.path.join(os.getcwd(), 'origin'))
     files = os.listdir()
 
-    for file in files:
-        for n, surname in enumerate(surname_l):
+    written_surnames = []
 
-            written_surnames = []
+    for file in files:
+
+        for n, surname in enumerate(surname_l):
 
             if len(surname) > 3:
 
-                # Stampare lista che faccia fede dell'associazione fra numero e cognome
+                # Logga lista che faccia fede dell'associazione fra numero e cognome
 
                 if surname not in written_surnames:
                     written_surnames.append(surname)
@@ -32,7 +33,7 @@ def rename_files(surname_l: List):
                     filetype = file.split('.')[1]
                     new_name = '{}_{}'.format(str(n), count)
 
-                    # Controlla che il file rinominato non esista già nella directory
+                    # Controlla se il file rinonimato esiste già, assegna un nuovo numero progressivo e ricontrolla
 
                     while os.path.isfile('./{}.{}'.format(new_name, filetype)):
                         count = count + 1
@@ -40,7 +41,6 @@ def rename_files(surname_l: List):
                         new_name = '{}_{}'.format(temp, count)
 
                     nn_final = '{}.{}'.format(new_name, filetype)
-                    # Test version
                     print(file, ' ----> ', nn_final)
                     os.rename(file, nn_final)
 
@@ -75,6 +75,5 @@ if __name__ == '__main__':
 
     if user_input == 'Y':
         surname_list = read_excel(XLS_FILE)
-        print(surname_list)
         rename_files(surname_list)
 
